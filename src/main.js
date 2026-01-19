@@ -124,4 +124,34 @@ if (document.getElementById('hero-canvas')) {
   // Небольшая задержка, чтобы все прогрузилось
   setTimeout(initThreeJsHero, 100);
 }
+/* =========================================
+   SCROLL REVEAL ANIMATION (Vanilla JS)
+   ========================================= */
+   const revealElements = () => {
+    const observerOptions = {
+        threshold: 0.1 // Сработает, когда 10% элемента будет видно
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                // Если нужно, чтобы анимация сработала только один раз:
+                // observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    const elementsToReveal = document.querySelectorAll('.reveal');
+    elementsToReveal.forEach(el => observer.observe(el));
+};
+
+// Запускаем функцию
+document.addEventListener('DOMContentLoaded', () => {
+    revealElements();
+    // Инициализируем иконки снова, если добавились новые
+    if (window.lucide) {
+        window.lucide.createIcons();
+    }
+});
 });

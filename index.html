@@ -1,56 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/umbra-grid/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vanilla App Template</title>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umbra Grid — ИИ для обычных людей</title>
+    <meta name="description" content="Практические решения на базе ИИ для повседневных задач">
+
+    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script type="module" crossorigin src="/umbra-grid/index.js"></script>
-    <link rel="stylesheet" crossorigin href="/umbra-grid/assets/styles-guStct1H.css">
+    <link rel="stylesheet" crossorigin href="/umbra-grid/assets/styles-CgXmMNt7.css">
   </head>
   <body>
     <header class="header">
-  <div class="container">
-    <nav class="nav">
-      <a class="nav-logo" href="./index.html" aria-label="Site logo">
-        <svg class="nav-logo-icon" width="100" height="30">
-          <use href="{=$icon-path}"></use>
-        </svg>
+  <div class="container header__container">
+      <a href="/" class="logo">
+          <span class="logo__icon"></span>
+          <span class="logo__text">Umbra-Grid</span>
       </a>
-      <ul class="nav-list">
-        <li class="nav-item">
-          <a class="nav-link {=$highlight-act}" href="./page-2.html">Page 2</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {=$highlight-curr}" href="./page-3.html">Page 3</a>
-        </li>
-      </ul>
-    </nav>
+
+      <nav class="nav" id="main-nav">
+          <ul class="nav__list">
+              <li><a href="#platform" class="nav__link">Платформа</a></li>
+              <li><a href="#benefits" class="nav__link">Преимущества</a></li>
+              <li><a href="#innovations" class="nav__link">Инновации</a></li>
+              <li><a href="#blog" class="nav__link">База знаний</a></li>
+              <li><a href="#about" class="nav__link">О проекте</a></li>
+          </ul>
+      </nav>
+
+      <div class="header__actions">
+          <a href="#contact" class="btn btn--primary">Начать сейчас</a>
+          <button class="menu-toggle" aria-label="Открыть меню">
+              <i data-lucide="menu"></i>
+          </button>
+      </div>
   </div>
 </header>
 
-
     <main>
       <!-- Loads the specified .html file -->
-      
+      <section class="hero" id="hero">
+  <div class="hero__canvas-container" id="hero-canvas"></div>
+
+  <div class="container hero__content">
+      <div class="hero__text-block">
+          <h1 class="hero__title">
+              AI-инструменты для <span class="text-highlight">реальных задач</span>
+          </h1>
+          <p class="hero__subtitle">
+              Передовая цифровая инфраструктура, доступная каждому. Воплотите мечты в реальность с технологиями нового поколения. Пошаговый путь, понятный без опыта.
+          </p>
+          <div class="hero__actions">
+              <a href="#contact" class="btn btn--primary btn--hero">
+                  Начать сейчас
+                  <i data-lucide="arrow-right" style="margin-left: 8px; width: 20px;"></i>
+              </a>
+              <a href="#platform" class="btn btn--secondary btn--hero">
+                  Узнать больше
+              </a>
+          </div>
+
+          <div class="hero__info">
+              <div class="hero__info-item">
+                  <i data-lucide="check-circle"></i>
+                  <span>Платформа уже доступна в Европе</span>
+              </div>
+              <div class="hero__info-item">
+                  <i data-lucide="zap"></i>
+                  <span>Быстрый и лёгкий старт</span>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+
     </main>
 
     <footer class="footer">
+  <div class="container footer__grid">
+      <div class="footer__col-info">
+          <a href="/" class="logo logo--footer">
+              <span class="logo__text">Umbra-Grid</span>
+          </a>
+          <p class="footer__tagline">Технологии, которые работают на вас. Переосмыслите подход к развитию вместе с нами.</p>
+
+          <div class="footer__contacts">
+              <div class="contact-item">
+                  <i data-lucide="map-pin"></i>
+                  <span>Via Dante, 15, 20121 Milano MI, Italy</span>
+              </div>
+              <div class="contact-item">
+                  <i data-lucide="phone"></i>
+                  <span>+39 02 123 4567</span>
+              </div>
+              <div class="contact-item">
+                  <i data-lucide="mail"></i>
+                  <span>hello@umbra-grid.blog</span>
+              </div>
+          </div>
+      </div>
+
+      <div class="footer__col-links">
+          <h4 class="footer__title">Навигация</h4>
+          <ul class="footer__list">
+              <li><a href="#platform">Платформа</a></li>
+              <li><a href="#benefits">Преимущества</a></li>
+              <li><a href="#innovations">Инновации</a></li>
+              <li><a href="#blog">Блог</a></li>
+          </ul>
+      </div>
+
+      <div class="footer__col-legal">
+          <h4 class="footer__title">Юридическая информация</h4>
+          <ul class="footer__list">
+              <li><a href="privacy.html">Privacy Policy</a></li>
+              <li><a href="cookies.html">Cookie Policy</a></li>
+              <li><a href="terms.html">Terms of Service</a></li>
+              <li><a href="return.html">Return Policy</a></li>
+              <li><a href="disclaimer.html">Disclaimer</a></li>
+              <li><a href="personal-data-policy.html">Personal Data</a></li>
+          </ul>
+      </div>
+  </div>
+
   <div class="container">
-    <p class="footer-desc">
-      Made with ✨ by
-      <a
-        class="footer-link"
-        href="https://goit.global/ua/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        GoIT team
-      </a>
-    </p>
+      <div class="footer__bottom">
+          <p>&copy; 2026 Umbra-Grid. Платформа уже доступна в Европе.</p>
+      </div>
   </div>
 </footer>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   </body>
 </html>

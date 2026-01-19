@@ -1210,3 +1210,298 @@ a {
   padding: 8px 20px;
   font-size: 0.85rem;
 }
+/* --- СТИЛИ ЮРИДИЧЕСКИХ СТРАНИЦ --- */
+.pages {
+  padding: 160px 0 100px;
+  min-height: 80vh;
+}
+
+.pages h1 {
+  font-size: 1.9rem;
+  margin-bottom: 40px;
+  color: var(--text);
+}
+
+.pages h2 {
+  font-size: 1.8rem;
+  margin: 40px 0 20px;
+  color: var(--primary);
+}
+
+.pages p {
+  margin-bottom: 20px;
+  color: var(--text-light);
+  font-size: 1.1rem;
+  max-width: 800px;
+}
+
+.pages ul {
+  margin-bottom: 30px;
+  padding-left: 20px;
+}
+
+.pages ul li {
+  list-style: disc;
+  color: var(--text-light);
+  margin-bottom: 10px;
+}
+
+/* Красивое оформление иконки успеха */
+.success-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.form-message.success h3 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
+/* --- ОПТИМИЗАЦИЯ БЛОГА ПОД МОБИЛЬНУЮ ВЕРСИЮ --- */
+
+@media (max-width: 768px) {
+  .blog {
+      padding: 60px 0; /* Уменьшаем вертикальные отступы */
+  }
+
+  .blog__header {
+      margin-bottom: 40px;
+      text-align: left;
+  }
+
+  .blog__header .section-title {
+      font-size: 2rem; /* Крупный, но читабельный заголовок */
+      line-height: 1.2;
+  }
+
+  .blog__header .btn {
+      margin-top: 20px;
+      width: 100%; /* Кнопка на всю ширину для удобства нажатия */
+      justify-content: center;
+  }
+
+  /* Переход от горизонтального скролла к вертикальному стеку */
+  .blog__grid {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      overflow-x: visible; /* Отменяем горизонтальный скролл, если он был */
+      padding: 0;
+  }
+
+  .blog-card {
+      min-width: 100%;
+      border-radius: 20px; /* Чуть меньше скругление для мобильных */
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  }
+
+  .blog-card__image {
+      height: 200px; /* Фиксированная высота для аккуратности */
+  }
+
+  .blog-card__content {
+      padding: 24px; /* Компактные отступы внутри контента */
+  }
+
+  .blog-card__title {
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+  }
+
+  .blog-card__excerpt {
+      font-size: 0.9rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; /* Ограничиваем текст 3 строками */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 20px;
+  }
+
+  /* Тач-эффект: визуальный отклик при нажатии */
+  .blog-card:active {
+      transform: scale(0.98);
+      background-color: #f8fafc;
+  }
+}
+
+/* Дополнительная сетка для планшетов (2 колонки) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .blog__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+  }
+}
+/* --- ОПТИМИЗАЦИЯ КОНТАКТОВ ПОД МОБИЛЬНУЮ ВЕРСИЮ --- */
+
+@media (max-width: 768px) {
+  .contact {
+      padding: 60px 0;
+  }
+
+  .contact__grid {
+      grid-template-columns: 1fr; /* Стек в одну колонку */
+      gap: 50px; /* Уменьшаем разрыв между инфо-блоком и формой */
+  }
+
+  .contact__info {
+      text-align: left;
+  }
+
+  .contact__info .section-title {
+      font-size: 2.2rem; /* Адаптивный размер заголовка */
+      margin-bottom: 16px;
+  }
+
+  /* Адаптация карточек контактов (телефон/email) */
+  .contact__details {
+      gap: 12px;
+  }
+
+  .detail-card {
+      padding: 15px;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 15px;
+  }
+
+  .detail-card i {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+  }
+
+  .detail-card span {
+      font-size: 0.75rem;
+      display: block;
+      margin-bottom: 2px;
+  }
+
+  .detail-card p {
+      font-size: 1rem;
+      font-weight: 600;
+  }
+
+  /* Адаптация формы */
+  .contact-form {
+      padding: 25px 20px; /* Уменьшаем внутренние отступы на узких экранах */
+      border-radius: 20px;
+  }
+
+  .form-group label {
+      font-size: 0.85rem;
+  }
+
+  .form-group input {
+      padding: 12px 16px;
+      font-size: 16px; /* Предотвращает авто-зум в iOS при фокусе */
+  }
+
+  /* Капча на мобильных */
+  .form-captcha {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 15px;
+  }
+
+  .form-captcha input {
+      width: 100%; /* Капча на всю ширину для удобства ввода */
+  }
+
+  /* Сообщение об успехе */
+  .form-message.success {
+      padding: 30px 15px;
+  }
+
+  .form-message.success h3 {
+      font-size: 1.25rem;
+  }
+
+  .form-message.success p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+  }
+}
+/* --- ОПТИМИЗАЦИЯ СЕКЦИИ "О ПРОЕКТЕ" ПОД МОБИЛЬНУЮ ВЕРСИЮ --- */
+
+@media (max-width: 768px) {
+  .about {
+      padding: 60px 0;
+  }
+
+  .about__container {
+      grid-template-columns: 1fr; /* Переход в одну колонку */
+      gap: 40px;
+  }
+
+  .about__image {
+      height: 280px; /* Уменьшаем высоту изображения для компактности */
+      order: -1; /* Гарантируем, что картинка будет над текстом */
+      border-radius: 20px;
+  }
+
+  /* Делаем сетку поверх фото чуть более выраженной для мобильных */
+  .about__grid-overlay {
+      background-size: 20px 20px;
+      opacity: 0.15;
+  }
+
+  .about__content {
+      text-align: left;
+  }
+
+  .about__content .section-title {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+  }
+
+  /* Адаптация блока статистики */
+  .about__stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Два показателя в ряд */
+      gap: 20px;
+      margin: 25px 0;
+      padding: 20px;
+      background: var(--white);
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+  }
+
+  .stat-item {
+      text-align: center;
+  }
+
+  .stat-number {
+      font-size: 2rem;
+      margin-bottom: 4px;
+  }
+
+  .stat-label {
+      font-size: 0.8rem;
+      line-height: 1.2;
+  }
+
+  .about__note {
+      font-size: 0.95rem;
+      padding-left: 15px;
+      border-left: 3px solid var(--primary); /* Акцентная линия слева */
+      color: var(--text-light);
+  }
+}
+
+/* Для совсем маленьких экранов (iPhone SE и т.д.) */
+@media (max-width: 380px) {
+  .about__stats {
+      grid-template-columns: 1fr; /* Статистика в один столбец */
+  }
+
+  .about__content .section-title {
+      font-size: 1.8rem;
+  }
+}

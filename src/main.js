@@ -1,157 +1,209 @@
-// Инициализация иконок Lucide
-lucide.createIcons();
+/**
+ * UMBRA-GRID.BLOG - CORE SCRIPT 2026
+ * Содержит: Three.js, Mobile Menu, Scroll Reveal, Accordion, Contact Form, Cookies
+ */
 
-// Обработка скролла для хедера
-const header = document.querySelector('.header');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        header.style.padding = '10px 0';
-        header.style.background = 'rgba(255, 255, 255, 0.95)';
-    } else {
-        header.style.padding = '0';
-        header.style.background = 'rgba(255, 255, 255, 0.8)';
-    }
-});
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. Инициализация иконок Lucide
+  if (window.lucide) lucide.createIcons();
 
-// Плавная навигация (уже поддерживается CSS, но добавим JS для контроля)
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            window.scrollTo({
-                top: target.offsetTop - 80,
-                behavior: 'smooth'
-            });
-        }
-    });
-    // ... (Предыдущий код script.js оставим в начале файла)
+  // 2. Мобильное меню
+  const menuToggle = document.querySelector('.menu-toggle');
+  const nav = document.getElementById('main-nav');
+  const body = document.body;
 
-/* =========================================
-   THREE.JS HERO ANIMATION (Только для этой секции)
-   ========================================= */
-function initThreeJsHero() {
-  const container = document.getElementById('hero-canvas');
-  if (!container) return;
+  if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+          nav.classList.toggle('active');
+          body.classList.toggle('body-lock');
 
-  let scene, camera, renderer, mesh;
-  let terrainGeometry;
-
-  function init() {
-      // 1. Сцена и Камера
-      scene = new THREE.Scene();
-      // Туман для глубины, цвет совпадает с фоном секции
-      scene.fog = new THREE.Fog(0x0F172A, 1, 1000);
-
-      camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 1, 2000);
-      // Позиция камеры: чуть выше и смотрим вниз под углом
-      camera.position.z = 400;
-      camera.position.y = 150;
-      camera.rotation.x = -0.8;
-
-      // 2. Рендерер с прозрачностью
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setSize(container.clientWidth, container.clientHeight);
-      renderer.setPixelRatio(window.devicePixelRatio > 1 ? 2 : 1); // Оптимизация для ретины
-      container.appendChild(renderer.domElement);
-
-      // 3. Геометрия Сетки (Плоскость с множеством сегментов)
-      const width = 2000;
-      const height = 2000;
-      const widthSegments = 60; // Количество линий сетки по ширине
-      const heightSegments = 60; // Количество линий сетки по высоте
-
-      terrainGeometry = new THREE.PlaneBufferGeometry(width, height, widthSegments, heightSegments);
-
-      // 4. Материал (Wireframe - проволочный каркас)
-      const material = new THREE.MeshBasicMaterial({
-          color: 0x818CF8, // Цвет индиго, как в дизайне
-          wireframe: true,
-          transparent: true,
-          opacity: 0.4
+          // Смена иконки
+          const icon = menuToggle.querySelector('i');
+          if (nav.classList.contains('active')) {
+              icon.setAttribute('data-lucide', 'x');
+          } else {
+              icon.setAttribute('data-lucide', 'menu');
+          }
+          lucide.createIcons();
       });
-
-      // 5. Создание Меша и добавление на сцену
-      mesh = new THREE.Mesh(terrainGeometry, material);
-      // Поворачиваем плоскость, чтобы она лежала "на полу"
-      mesh.rotation.x = -Math.PI / 2;
-      scene.add(mesh);
-
-      window.addEventListener('resize', onWindowResize, false);
   }
 
-  // Анимация волн
+  // Закрытие меню при клике на ссылку
+  document.querySelectorAll('.nav__link').forEach(link => {
+      link.addEventListener('click', () => {
+          nav.classList.remove('active');
+          body.classList.remove('body-lock');
+          const icon = menuToggle.querySelector('i');
+          icon.setAttribute('data-lucide', 'menu');
+          lucide.createIcons();
+      });
+  });
+
+  // 3. Эффект скролла хедера
+  const header = document.querySelector('.header');
+  window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+          header.classList.add('header--scrolled');
+      } else {
+          header.classList.remove('header--scrolled');
+      }
+  });
+
+  // 4. Intersection Observer (Scroll Reveal)
+  const observerOptions = { threshold: 0.1 };
+  const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+          if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+          }
+      });
+  }, observerOptions);
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // 5. Аккордеон (Инновации)
+  const accordionItems = document.querySelectorAll('.accordion__item');
+  accordionItems.forEach(item => {
+      const headerBtn = item.querySelector('.accordion__header');
+      const content = item.querySelector('.accordion__content');
+
+      headerBtn.addEventListener('click', () => {
+          const isActive = item.classList.contains('active');
+
+          // Сброс остальных
+          accordionItems.forEach(i => {
+              i.classList.remove('active');
+              i.querySelector('.accordion__content').style.maxHeight = null;
+          });
+
+          if (!isActive) {
+              item.classList.add('active');
+              content.style.maxHeight = content.scrollHeight + "px";
+          }
+      });
+  });
+
+  // 6. Форма контактов
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+      // Генерация капчи
+      const captchaLabel = document.getElementById('captchaQuestion');
+      const n1 = Math.floor(Math.random() * 10) + 1;
+      const n2 = Math.floor(Math.random() * 10) + 1;
+      const correctSum = n1 + n2;
+      if (captchaLabel) captchaLabel.innerText = `${n1} + ${n2}`;
+
+      // Валидация телефона (только цифры)
+      const phoneInput = document.getElementById('phone');
+      phoneInput.addEventListener('input', (e) => {
+          e.target.value = e.target.value.replace(/[^\d+]/g, '');
+      });
+
+      contactForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const captchaInput = document.getElementById('captchaInput').value;
+
+          if (parseInt(captchaInput) !== correctSum) {
+              alert('Ошибка капчи. Пожалуйста, решите пример правильно.');
+              return;
+          }
+
+          const btn = contactForm.querySelector('button');
+          btn.disabled = true;
+          btn.innerText = 'Отправка...';
+
+          setTimeout(() => {
+              contactForm.style.display = 'none';
+              document.getElementById('formSuccess').style.display = 'block';
+              lucide.createIcons();
+          }, 1500);
+      });
+  }
+
+  // 7. Cookie Popup logic
+  const cookiePopup = document.getElementById('cookiePopup');
+  const acceptBtn = document.getElementById('acceptCookies');
+
+  if (!localStorage.getItem('cookiesAccepted')) {
+      setTimeout(() => {
+          cookiePopup.classList.add('active');
+      }, 2000);
+  }
+
+  acceptBtn.addEventListener('click', () => {
+      localStorage.setItem('cookiesAccepted', 'true');
+      cookiePopup.classList.remove('active');
+  });
+
+  // 8. Параллакс для картинок блога (на десктопе)
+  if (window.innerWidth > 1024) {
+      window.addEventListener('scroll', () => {
+          document.querySelectorAll('.blog-card__image img').forEach(img => {
+              const rect = img.parentElement.getBoundingClientRect();
+              if (rect.top < window.innerHeight && rect.bottom > 0) {
+                  const shift = (window.innerHeight - rect.top) * 0.05;
+                  img.style.transform = `scale(1.1) translateY(${shift - 20}px)`;
+              }
+          });
+      });
+  }
+});
+
+/**
+* THREE.JS HERO ANIMATION
+*/
+function initThreeHero() {
+  const container = document.getElementById('hero-canvas');
+  if (!container || !window.THREE) return;
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x0F172A, 1, 1000);
+
+  const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 1, 2000);
+  camera.position.set(0, 150, 400);
+  camera.rotation.x = -0.8;
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  const geometry = new THREE.PlaneBufferGeometry(2000, 2000, 60, 60);
+  const material = new THREE.MeshBasicMaterial({
+      color: 0x4F46E5,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.3
+  });
+
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.rotation.x = -Math.PI / 2;
+  scene.add(mesh);
+
   let time = 0;
   function animate() {
       requestAnimationFrame(animate);
       time += 0.005;
-
-      // Получаем доступ к вершинам (точкам) геометрии
-      const positionAttribute = terrainGeometry.attributes.position;
-      const vertices = positionAttribute.array;
-
-      // Проходимся по всем вершинам и меняем их Z-координату (высоту)
-      // Используем синусы и косинусы для создания плавных волн
-      for (let i = 0; i < vertices.length; i += 3) {
-          const x = vertices[i];
-          const y = vertices[i + 1];
-
-          // Формула для "ландшафта"
-          vertices[i + 2] = Math.sin(x * 0.005 + time) * 30 + Math.cos(y * 0.005 + time) * 20;
+      const pos = geometry.attributes.position;
+      for (let i = 0; i < pos.count; i++) {
+          const x = pos.getX(i);
+          const y = pos.getY(i);
+          const z = Math.sin(x * 0.005 + time) * 30 + Math.cos(y * 0.005 + time) * 20;
+          pos.setZ(i, z);
       }
-
-      // Сообщаем Three.js, что вершины изменились
-      positionAttribute.needsUpdate = true;
-
-      // Медленное вращение всей сетки
+      pos.needsUpdate = true;
       mesh.rotation.z += 0.001;
-
       renderer.render(scene, camera);
   }
 
-  function onWindowResize() {
+  window.addEventListener('resize', () => {
       camera.aspect = container.clientWidth / container.clientHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(container.clientWidth, container.clientHeight);
-  }
+  });
 
-  init();
   animate();
 }
 
-// Запускаем Three.js только если мы на странице (на всякий случай)
-if (document.getElementById('hero-canvas')) {
-  // Небольшая задержка, чтобы все прогрузилось
-  setTimeout(initThreeJsHero, 100);
-}
-/* =========================================
-   SCROLL REVEAL ANIMATION (Vanilla JS)
-   ========================================= */
-   const revealElements = () => {
-    const observerOptions = {
-        threshold: 0.1 // Сработает, когда 10% элемента будет видно
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                // Если нужно, чтобы анимация сработала только один раз:
-                // observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    const elementsToReveal = document.querySelectorAll('.reveal');
-    elementsToReveal.forEach(el => observer.observe(el));
-};
-
-// Запускаем функцию
-document.addEventListener('DOMContentLoaded', () => {
-    revealElements();
-    // Инициализируем иконки снова, если добавились новые
-    if (window.lucide) {
-        window.lucide.createIcons();
-    }
-});
-});
+// Запуск Three.js после всех проверок
+window.addEventListener('load', initThreeHero);
